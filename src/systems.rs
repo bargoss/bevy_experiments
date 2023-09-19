@@ -1,17 +1,19 @@
 mod utilities;
 
 use std::f32::consts::PI;
-use bevy::{prelude::*, sprite::collide_aabb};
-use components::*;
+use bevy::{log, prelude::*, sprite::collide_aabb};
+
 use rand::{thread_rng, Rng};
+use crate::components::*;
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn_bundle(Camera2dBundle::default());
+    //commands.spawn(Camera2dBundle::default());
+    commands.spawn(Camera2dBundle::default());
 
     // player
     let ship_handle = asset_server.load("textures/simplespace/ship_C.png");
     commands
-        .spawn_bundle(SpriteBundle {
+        .spawn(SpriteBundle {
             texture: ship_handle,
             ..default()
         })
@@ -92,7 +94,7 @@ pub fn player_shooting_system(
 
                 let bullet_transform = Transform::from_matrix(translation * rotation_matrix * scale);
                 commands
-                    .spawn_bundle(SpriteBundle {
+                    .spawn(SpriteBundle {
                         transform: bullet_transform,
                         sprite: Sprite {
                             color: Color::rgb(0.9, 0.8, 0.0),
@@ -105,7 +107,7 @@ pub fn player_shooting_system(
             }
 
             //commands
-            //    .spawn_bundle(SpriteBundle {
+            //    .spawn(SpriteBundle {
             //        transform: *tfm,
             //        sprite: Sprite {
             //            color: Color::rgb(0.9, 0.8, 0.0),
@@ -202,7 +204,7 @@ pub fn bullet_hit_system(
                 translation = translation * rotation_matrix * scale;
 
                 commands
-                    .spawn_bundle(SpriteBundle {
+                    .spawn(SpriteBundle {
                         transform: Transform::from_matrix(translation),
                         sprite: Sprite {
                             color: Color::rgb(0.9, 0.8, 0.0),
@@ -262,7 +264,7 @@ pub fn spawn_other_ships(
         transform.rotate_z(dir.to_radians());
 
         commands
-            .spawn_bundle(SpriteBundle {
+            .spawn(SpriteBundle {
                 texture: asset_server.load("textures/simplespace/enemy_A.png"),
                 transform,
                 ..default()
