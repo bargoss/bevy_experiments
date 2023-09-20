@@ -7,3 +7,4 @@ edition = "2021"
 crate-type = ["rlib", "dylib"]
 
 [dependencies]
+components = { version = "0.1.0", path = "../components" }
