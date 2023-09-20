@@ -1,5 +1,5 @@
 commands:
   bin: |
-    cargo run --features reload
-  systems: |
-    cargo watch -w systems -w components -x "build -p systems --features dynamic"
+    cargo watch -i lib -x "run --features reload"
+  lib: |
+    cargo watch -w lib -x "build -p lib"

@@ -1,29 +1,17 @@
 [workspace]
 resolver = "2"
-members = ["hot_functions"]
+members = ["lib"]
 
 [package]
-name = "bin"
+name = "bevy-experiments"
+authors = ["byesiltepe"]
 version = "0.1.0"
 edition = "2021"
 
-# Enable a small amount of optimization in debug mode
-[profile.dev]
-opt-level = 1
-
-# Enable high optimizations for dependencies (incl. Bevy), but not for our code:
-[profile.dev.package."*"]
-opt-level = 3
-
 [dependencies]
-bevy = { version = "0.11.2" }
-# also works without feature "dynamic-linking" -> cargo run --features bevy/dynamic_linking
-hot-lib-reloader = { version = "0.6.5", optional = true }
-rand = "0.8.5"
-hot_functions = { path = "hot_functions" }
+lib = { path = "./lib" }
+hot-lib-reloader = { version = "^0.6", optional = true }
 
 [features]
 default = []
-reload = [
-  "dep:hot-lib-reloader",
-]
+reload = ["dep:hot-lib-reloader"]
