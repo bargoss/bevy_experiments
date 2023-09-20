@@ -16,7 +16,7 @@ opt-level = 1
 opt-level = 3
 
 [dependencies]
-bevy = { version = "0.8.0" }
+bevy = { version = "0.11.2" }
 # also works without feature "dynamic-linking" -> cargo run --features bevy/dynamic_linking
 components = { path = "components" }
 hot-lib-reloader = { version = "0.6.5", optional = true }
@@ -30,5 +30,5 @@ reload = [
   # Make sure that the types don't change:
   "components/dynamic",
   # This is important on windows for avoiding file locking issues:
-  "bevy/dynamic",
+  "bevy/dynamic_linking",
 ]
