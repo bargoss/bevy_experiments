@@ -1228,6 +1228,9 @@ dependencies = [
 [[package]]
 name = "components"
 version = "0.1.0"
+dependencies = [
+ "bevy",
+]
 
 [[package]]
 name = "concurrent-queue"
@@ -2130,6 +2133,7 @@ dependencies = [
 name = "lib"
 version = "0.1.0"
 dependencies = [
+ "bevy",
  "components",
 ]
 
