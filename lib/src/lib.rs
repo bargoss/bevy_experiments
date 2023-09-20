@@ -1,9 +1,4 @@
-#[derive(Default, Debug)]
-pub struct State {
-    pub counter: usize,
-}
-
 #[no_mangle]
-pub fn step(state: &mut State) {
-    state.counter += 1;
+pub fn get_str() -> &'static str {
+    "Hello, World!2"
 }
