@@ -9,6 +9,7 @@ crate-type = ["rlib", "dylib"]
 [dependencies]
 bevy = { version = "0.11.2" }
 components = { path = "../components" }
+utilities = { path = "../utilities" }
 log = "0.4.17"
 rand = "0.8.5"
 

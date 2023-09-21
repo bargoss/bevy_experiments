@@ -17,11 +17,13 @@ opt-level = 3
 
 [dependencies]
 bevy = { version = "0.11.2" }
+bevy-inspector-egui = "0.19.0"
 # also works without feature "dynamic-linking" -> cargo run --features bevy/dynamic_linking
 components = { path = "components" }
 hot-lib-reloader = { version = "0.6.5", optional = true }
 rand = "0.8.5"
 systems = { path = "systems" }
+utilities = { version = "0.1.0", path = "utilities" }
 
 [features]
 default = []
