@@ -273,3 +273,13 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             shooting_timer: None,
         });
 }
+
+
+#[no_mangle]
+pub fn player_movement_system(
+    keyboard_input: Res<Input<KeyCode>>,
+    mut query: Query<(&Player, &mut Transform)>,
+    time: Res<Time>,
+) {
+    player_movement_system_inner(keyboard_input, query, time);
+}

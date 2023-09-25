@@ -3,9 +3,8 @@ use bevy::{prelude::*, sprite::collide_aabb};
 use components::*;
 use rand::{thread_rng, Rng};
 
-
 #[no_mangle]
-pub fn player_movement_system(
+pub fn player_movement_system_inner(
     keyboard_input: Res<Input<KeyCode>>,
     mut query: Query<(&Player, &mut Transform)>,
     time: Res<Time>,
@@ -23,7 +22,7 @@ pub fn player_movement_system(
     let mut rotation_factor = 0.0;
     let mut movement_factor = 0.0;
 
-    
+
 
     if keyboard_input.pressed(KeyCode::Left) {
         rotation_factor += 1.0;
@@ -54,8 +53,6 @@ pub fn player_movement_system(
     let extents = Vec3::from((BOUNDS / 2.0, 0.0));
     transform.translation = transform.translation.min(extents).max(-extents);
 }
-
-
 
 
 #[no_mangle]
