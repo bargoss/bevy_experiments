@@ -19,6 +19,7 @@ mod systems_hot {
     hot_functions_from_file!("systems/src/lib.rs");
 }
 
+
 fn main() {
     //bevy::tasks::IoTaskPool::init(|| {
     //    bevy::tasks::TaskPool::new()
@@ -30,7 +31,8 @@ fn main() {
         .add_plugins(WorldInspectorPlugin::new())
         .add_systems(PostStartup, setup)
         .add_systems(Update, (
-            player_movement_system,
+            player_input_system,
+            player_movement_system.after(player_input_system),
             player_shooting_system,
             bullet_movement_system,
             bullet_hit_system,
@@ -52,6 +54,32 @@ use bevy::{log, prelude::*, sprite::collide_aabb};
 
 use core::f32::consts::PI;
 
+pub fn player_input_system(
+    keyboard_input: Res<Input<KeyCode>>,
+    mut query: Query<(&mut Player)>,
+) {
+
+    let (mut ship) = query.single_mut();
+
+    let mut rotation_factor = 0.0;
+    let mut movement_factor = 0.0;
+
+    if keyboard_input.pressed(KeyCode::Left) {
+        rotation_factor += 1.0;
+        println!("left");
+    }
+
+    if keyboard_input.pressed(KeyCode::Right) {
+        rotation_factor -= 1.0;
+    }
+
+    if keyboard_input.pressed(KeyCode::Up) {
+        movement_factor += 1.0;
+    }
+
+    ship.rotation_factor = rotation_factor;
+    ship.movement_factor = movement_factor;
+}
 
 pub fn spawn_other_ships(
     mut commands: Commands,
@@ -271,15 +299,9 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             velocity: Vec3::ZERO,
             rotation_speed: f32::to_radians(180.0),
             shooting_timer: None,
+            movement_factor: 0.0,
+            rotation_factor: 0.0,
         });
 }
 
 
-#[no_mangle]
-pub fn player_movement_system(
-    keyboard_input: Res<Input<KeyCode>>,
-    mut query: Query<(&Player, &mut Transform)>,
-    time: Res<Time>,
-) {
-    player_movement_system_inner(keyboard_input, query, time);
-}

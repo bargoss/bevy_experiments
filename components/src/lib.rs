@@ -15,4 +15,6 @@ pub struct Player {
     pub velocity: Vec3,
     pub rotation_speed: f32,
     pub shooting_timer: Option<Timer>,
+    pub rotation_factor: f32,
+    pub movement_factor: f32
 }

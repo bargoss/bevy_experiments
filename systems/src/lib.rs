@@ -4,8 +4,7 @@ use components::*;
 use rand::{thread_rng, Rng};
 
 #[no_mangle]
-pub fn player_movement_system_inner(
-    keyboard_input: Res<Input<KeyCode>>,
+pub fn player_movement_system(
     mut query: Query<(&Player, &mut Transform)>,
     time: Res<Time>,
 ) {
@@ -19,23 +18,8 @@ pub fn player_movement_system_inner(
 
     let (ship, mut transform) = query.single_mut();
 
-    let mut rotation_factor = 0.0;
-    let mut movement_factor = 0.0;
-
-
-
-    if keyboard_input.pressed(KeyCode::Left) {
-        rotation_factor += 1.0;
-        println!("left");
-    }
-
-    if keyboard_input.pressed(KeyCode::Right) {
-        rotation_factor -= 1.0;
-    }
-
-    if keyboard_input.pressed(KeyCode::Up) {
-        movement_factor += 1.0;
-    }
+    let rotation_factor = ship.rotation_factor;
+    let movement_factor = ship.movement_factor;
 
     // update the ship rotation around the Z axis (perpendicular to the 2D plane of the screen)
     transform.rotate_z(rotation_factor * ship.rotation_speed * time.delta_seconds());
@@ -43,7 +27,7 @@ pub fn player_movement_system_inner(
     // get the ship's forward vector by applying the current rotation to the ships initial facing vector
     let movement_direction = transform.rotation * Vec3::Y;
     // get the distance the ship will move based on direction, the ship's movement speed and delta time
-    let movement_distance = movement_factor * SPEED * time.delta_seconds();
+    let movement_distance = movement_factor * SPEED * time.delta_seconds() * 1.0;
     // create the change in translation using the new movement direction and distance
     let translation_delta = movement_direction * movement_distance;
     // update the ship translation with our new translation delta
